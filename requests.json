@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "937f337c-c360-4403-bc46-dd8a1d66a375",
+		"name": "requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18010600"
+	},
+	"item": [
+		{
+			"name": "The First",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}first",
+					"host": [
+						"{{url}}first"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_method",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/get_method?age=24&name=Paul",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"get_method"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "24"
+						},
+						{
+							"key": "name",
+							"value": "Paul"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(jsonData.token)\r",
+							"\r",
+							"let session_token = jsonData.token\r",
+							"\r",
+							"pm.environment.set(\"token\", session_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "Pasha",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123kl",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}login",
+					"host": [
+						"{{url}}login"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "24",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Paul",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "24",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Paul",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}user_info_3",
+					"host": [
+						"{{url}}user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"let req_f = request.data\r",
+							"\r",
+							"let salary = +req_f.salary * 2\r",
+							"\r",
+							"let respSalaryPer6 = jsonData.qa_salary_after_6_months\r",
+							"\r",
+							"\r",
+							"pm.test(\"Salary 1\", function () {\r",
+							"    pm.expect(respSalaryPer6).to.eql(respSalaryPer6);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let age = +req_f.age\r",
+							"let age2 = jsonData.person.u_age\r",
+							"\r",
+							"pm.test(\"Age 1\", function () {\r",
+							"    pm.expect(age2).to.eql(age);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let userSal = +req_f.salary\r",
+							"let respUserSalary = jsonData.person.u_name[1]\r",
+							"\r",
+							"pm.test(\"sal\", function () {\r",
+							"    pm.expect(userSal).to.eql(respUserSalary);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"console.log(req_f)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "24",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Paul",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}user_info2",
+					"host": [
+						"{{url}}user_info2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let reqB = JSON.parse(pm.request.body.raw)\r",
+							"console.log('tReqF' + reqB.salary)\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"let startSalary = jsonData.start_qa_salary\r",
+							"\r",
+							"\r",
+							"let reqSalary = reqB.salary\r",
+							"\r",
+							"\r",
+							"pm.test(\"sal\", function () {\r",
+							"    pm.expect(reqSalary).to.eql(startSalary);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Paul\",\r\n    \"age\":23,\r\n    \"salary\":500,\r\n    \"auth_token\":\"{{token}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}user_info",
+					"host": [
+						"{{url}}user_info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
